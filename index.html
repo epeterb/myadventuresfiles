@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Adventures — Personalized Storybooks Where Your Child Is the Hero</title>
+    <meta name="description" content="Every child deserves to be the hero of their own story. Personalized storybooks with your child's name, interests, and illustrations on every page.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8F0;
+            --warm-white: #FFFDFB;
+            --navy: #2C3E6B;
+            --navy-light: #3D5291;
+            --orange: #E8793A;
+            --orange-soft: #F09A5E;
+            --green: #5B9A6F;
+            --green-light: #EAF5EC;
+            --blue-light: #E8F1F8;
+            --gold: #F5C542;
+            --gold-soft: #FAECC0;
+            --text: #1F2937;
+            --text-soft: #4B5563;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --shadow: 0 4px 24px rgba(44, 62, 107, 0.08);
+            --shadow-lg: 0 12px 48px rgba(44, 62, 107, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 500; }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Nav ────────────────────────────────────────────── */
+        nav {
+            padding: 20px 0;
+            position: relative;
+            z-index: 10;
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--navy);
+            text-decoration: none;
+        }
+        .logo span { color: var(--orange); }
+        .nav-cta {
+            background: var(--orange);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px rgba(232, 121, 58, 0.3);
+        }
+        .nav-cta:hover {
+            background: var(--navy);
+            box-shadow: 0 2px 12px rgba(44, 62, 107, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* ── Hero ───────────────────────────────────────────── */
+        .hero {
+            padding: 60px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(245, 197, 66, 0.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--gold-soft);
+            color: var(--navy);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: 0.02em;
+        }
+        .hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+            color: var(--navy);
+            line-height: 1.15;
+            margin-bottom: 20px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--orange);
+        }
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-soft);
+            max-width: 540px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--orange);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(232, 121, 58, 0.35);
+        }
+        .hero-cta:hover {
+            background: var(--navy);
+            box-shadow: 0 4px 20px rgba(44, 62, 107, 0.35);
+            transform: translateY(-2px);
+        }
+        .hero-cta svg { transition: transform 0.3s; }
+        .hero-cta:hover svg { transform: translateX(3px); }
+        .hero-note {
+            margin-top: 14px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Stars decoration ───────────────────────────────── */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            color: var(--gold);
+            opacity: 0.3;
+            font-size: 1.2rem;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        .star:nth-child(1) { top: 15%; left: 8%; animation-delay: 0s; }
+        .star:nth-child(2) { top: 25%; right: 10%; animation-delay: 1s; font-size: 0.9rem; }
+        .star:nth-child(3) { top: 60%; left: 5%; animation-delay: 0.5s; font-size: 1.5rem; }
+        .star:nth-child(4) { top: 50%; right: 6%; animation-delay: 2s; }
+        .star:nth-child(5) { top: 80%; left: 12%; animation-delay: 1.5s; font-size: 0.8rem; }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* ── How It Works ───────────────────────────────────── */
+        .how-it-works {
+            padding: 80px 0;
+            background: var(--warm-white);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--orange);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .step {
+            text-align: center;
+            padding: 32px 24px;
+            background: var(--cream);
+            border-radius: 16px;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        .step:hover { transform: translateY(-4px); }
+        .step-num {
+            width: 48px;
+            height: 48px;
+            background: var(--navy);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 0 auto 16px;
+        }
+        .step-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .step h3 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+        .step p {
+            font-size: 0.92rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+        .steps-connector {
+            display: none; /* visible on desktop via pseudo-elements on .step */
+        }
+
+        /* ── What They Get ──────────────────────────────────── */
+        .what-they-get {
+            padding: 80px 0;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--warm-white);
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            box-shadow: var(--shadow);
+            border-color: transparent;
+        }
+        .feature-icon {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .feature-card h3 {
+            font-size: 1.05rem;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+
+        /* ── Safety ─────────────────────────────────────────── */
+        .safety {
+            padding: 60px 0;
+            background: var(--green-light);
+            border-top: 1px solid #D1E7D6;
+            border-bottom: 1px solid #D1E7D6;
+        }
+        .safety-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .safety-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .safety-icon svg { color: white; }
+        .safety h2 {
+            font-size: 1.6rem;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+        .safety p {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        .safety-points {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+            text-align: left;
+        }
+        .safety-point {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .safety-check {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+        .safety-check svg { width: 12px; height: 12px; color: white; }
+        .safety-point span {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+        }
+
+        /* ── CTA Section ────────────────────────────────────── */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .cta-card {
+            background: var(--navy);
+            border-radius: 24px;
+            padding: 56px 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(245, 197, 66, 0.15) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .cta-card h2 {
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            color: white;
+            margin-bottom: 12px;
+        }
+        .cta-card p {
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 28px;
+            font-size: 1rem;
+        }
+        .cta-card .hero-cta {
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(245, 197, 66, 0.35);
+        }
+        .cta-card .hero-cta:hover {
+            background: white;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+        }
+        .cta-card .hero-note { color: rgba(255, 255, 255, 0.5); }
+
+        /* ── Footer ─────────────────────────────────────────── */
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        footer p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        footer a { color: var(--navy); }
+
+        /* ── Responsive ─────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .steps { grid-template-columns: 1fr; gap: 20px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .safety-points { grid-template-columns: 1fr; }
+            .hero { padding: 40px 0 60px; }
+            .how-it-works, .what-they-get, .cta-section { padding: 60px 0; }
+            .cta-card { padding: 40px 24px; }
+        }
+
+        /* ── Page load animation ────────────────────────────── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+        .fade-up:nth-child(2) { animation-delay: 0.1s; }
+        .fade-up:nth-child(3) { animation-delay: 0.2s; }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">My <span>Adventures</span></a>
+            <a href="/signup" class="nav-cta">Get Your Free Book</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="stars">
+            <span class="star">✦</span>
+            <span class="star">✦</span>
+            <span class="star">✦</span>
+            <span class="star">✦</span>
+            <span class="star">✦</span>
+        </div>
+        <div class="container">
+            <div class="fade-up">
+                <span class="hero-badge">✨ Free for your child's classroom</span>
+            </div>
+            <h1 class="fade-up">A storybook where <em>your child</em> is the hero</h1>
+            <p class="hero-sub fade-up">
+                Their name. Their interests. Their face on every page. 
+                A real book written just for them — designed to make reading feel like an adventure.
+            </p>
+            <a href="/signup" class="hero-cta fade-up">
+                Create Your Child's Book
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <p class="hero-note fade-up">Takes 2 minutes. Completely free.</p>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <p class="section-label">How it works</p>
+            <h2 class="section-title">Three steps. Two minutes. One very excited kid.</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-icon">📝</span>
+                    <div class="step-num">1</div>
+                    <h3>Tell us about your child</h3>
+                    <p>Their name, age, and what they love — dinosaurs, space, animals, trucks. Whatever makes them light up.</p>
+                </div>
+                <div class="step">
+                    <span class="step-icon">📸</span>
+                    <div class="step-num">2</div>
+                    <h3>Share a couple of photos</h3>
+                    <p>A class picture, playing in the yard, doing their favorite thing — any photo where you can see their smile.</p>
+                </div>
+                <div class="step">
+                    <span class="step-icon">📖</span>
+                    <div class="step-num">3</div>
+                    <h3>Get your storybook</h3>
+                    <p>We create a 12-page illustrated adventure written for your child's reading level. Delivered digitally within a week.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="what-they-get">
+        <div class="container">
+            <p class="section-label">What makes it special</p>
+            <h2 class="section-title">Not a template. A real story, written for one kid.</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🦕</span>
+                    <h3>Built around their world</h3>
+                    <p>Love dinosaurs? They'll rescue a baby triceratops. Obsessed with space? They're exploring a new planet. Their passions drive the plot.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🎨</span>
+                    <h3>They see themselves</h3>
+                    <p>Every illustration features your child as the hero — drawn in a warm, whimsical storybook style that they'll recognize and love.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📚</span>
+                    <h3>Right reading level</h3>
+                    <p>Stories are calibrated for your child's age — simple and rhythmic for younger readers, richer and more complex for older ones.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💛</span>
+                    <h3>Kindness, not conflict</h3>
+                    <p>Problems are solved with cleverness and empathy. No scary villains. Your child learns courage, curiosity, and compassion through their adventure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="safety">
+        <div class="container">
+            <div class="safety-inner">
+                <div class="safety-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h2>Your child's safety comes first</h2>
+                <p>We're parents too. Here's how we protect your family's privacy:</p>
+                <div class="safety-points">
+                    <div class="safety-point">
+                        <div class="safety-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <span>Photos are used <strong>only</strong> to create illustrations — never shared, sold, or used for anything else</span>
+                    </div>
+                    <div class="safety-point">
+                        <div class="safety-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <span>Original photos are deleted after your book is created</span>
+                    </div>
+                    <div class="safety-point">
+                        <div class="safety-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <span>Every story is reviewed for age-appropriate content before delivery</span>
+                    </div>
+                    <div class="safety-point">
+                        <div class="safety-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <span>Your child's information is never stored alongside their name</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <h2>Every child deserves to be the hero</h2>
+                <p>It takes two minutes and it's completely free for your child's class.</p>
+                <a href="/signup" class="hero-cta">
+                    Get Started
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <p class="hero-note">Your child's first adventure is on us.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>My Adventures — Personalized storybooks that make reading personal.<br>
+            Questions? Reach out to your child's teacher or email <a href="mailto:hello@myadventures.life">hello@myadventures.life</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

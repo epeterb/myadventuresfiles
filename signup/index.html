@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — My Adventures</title>
+    <meta name="description" content="Create a free personalized storybook for your child. Takes 2 minutes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FFF8F0;
+            --warm-white: #FFFDFB;
+            --navy: #2C3E6B;
+            --orange: #E8793A;
+            --green: #5B9A6F;
+            --green-light: #EAF5EC;
+            --gold: #F5C542;
+            --gold-soft: #FAECC0;
+            --text: #1F2937;
+            --text-soft: #4B5563;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 500; }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Nav ────────────────────────────────────────────── */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--navy);
+            text-decoration: none;
+        }
+        .logo span { color: var(--orange); }
+        .nav-back {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .nav-back:hover { color: var(--navy); }
+
+        /* ── Page Header ────────────────────────────────────── */
+        .page-header {
+            text-align: center;
+            padding: 48px 0 16px;
+        }
+        .page-header h1 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+        .page-header h1 em {
+            color: var(--orange);
+            font-style: italic;
+        }
+        .page-header p {
+            color: var(--text-soft);
+            font-size: 1rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ── Tally Form Container ───────────────────────────── */
+        .form-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 0 60px;
+        }
+
+        /* Tally embed iframe styles */
+        .tally-embed {
+            width: 100%;
+            min-height: 800px;
+            border: none;
+            border-radius: 16px;
+            background: var(--warm-white);
+        }
+
+        /* ── Fallback form (before Tally is set up) ─────────── */
+        .fallback-form {
+            background: var(--warm-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 36px;
+            margin-top: 8px;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .form-group .hint {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            background: white;
+            color: var(--text);
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--navy);
+        }
+        .form-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        /* Interests checkboxes */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 8px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .checkbox-item:hover {
+            border-color: var(--navy);
+            background: var(--cream);
+        }
+        .checkbox-item input {
+            accent-color: var(--navy);
+        }
+
+        /* Photo upload */
+        .photo-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            background: var(--cream);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .photo-upload-area:hover {
+            border-color: var(--navy);
+            background: #F5F0EA;
+        }
+        .photo-upload-area .upload-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .photo-upload-area p {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+        .photo-upload-area .upload-cta {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .photo-tips {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .photo-tip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .photo-tip .tip-icon {
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        /* Submit */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--orange);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(232, 121, 58, 0.3);
+        }
+        .submit-btn:hover {
+            background: var(--navy);
+            box-shadow: 0 4px 16px rgba(44, 62, 107, 0.3);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .form-footer p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ── Privacy note ───────────────────────────────────── */
+        .privacy-strip {
+            background: var(--green-light);
+            border: 1px solid #D1E7D6;
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .privacy-strip .shield { font-size: 1.2rem; }
+        .privacy-strip p {
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            line-height: 1.5;
+        }
+
+        /* ── Footer ─────────────────────────────────────────── */
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        footer p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            .fallback-form { padding: 28px 20px; }
+            .checkbox-grid { grid-template-columns: 1fr 1fr; }
+            .photo-tips { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="/" class="logo">My <span>Adventures</span></a>
+            <a href="/" class="nav-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to home
+            </a>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1>Create <em>your child's</em> adventure</h1>
+        <p>Answer a few quick questions and upload 2–3 photos. We'll handle the rest.</p>
+    </section>
+
+    <div class="form-container">
+
+        <!--
+        ════════════════════════════════════════════════════════
+        OPTION A: Tally Embed (recommended)
+        ════════════════════════════════════════════════════════
+        Once you create your Tally form, replace TALLY_FORM_ID
+        below with your actual form ID. Uncomment this block
+        and delete or comment out the fallback form below.
+
+        <iframe
+            data-tally-src="https://tally.so/embed/TALLY_FORM_ID?alignLeft=1&hideTitle=1&transparentBackground=1"
+            class="tally-embed"
+            loading="lazy"
+            title="My Adventures Signup"
+        ></iframe>
+        <script>
+            var d=document,w="https://tally.so/widgets/embed.js",
+            v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};
+            if("undefined"!=typeof Tally)v();
+            else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w;s.onload=v;s.onerror=v;d.body.appendChild(s)}else v();
+        </script>
+        ════════════════════════════════════════════════════════
+        -->
+
+
+        <!-- OPTION B: Static form (works now, before Tally is set up) -->
+        <div class="fallback-form">
+
+            <div class="privacy-strip">
+                <span class="shield">🛡️</span>
+                <p>Photos are used <strong>only</strong> to create your child's storybook illustrations. They're never shared or stored long-term. <a href="/#safety" style="color: var(--green);">Learn more</a></p>
+            </div>
+
+            <form action="#" method="POST" id="signupForm">
+
+                <div class="form-group">
+                    <label>Your email address</label>
+                    <p class="hint">We'll send the finished storybook here</p>
+                    <input type="email" name="parent_email" required placeholder="you@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Child's first name</label>
+                    <input type="text" name="child_name" required placeholder="e.g. Leo">
+                </div>
+
+                <div class="form-group">
+                    <label>Child's age</label>
+                    <select name="child_age" required>
+                        <option value="" disabled selected>Select age</option>
+                        <option value="5">5 years old</option>
+                        <option value="6">6 years old</option>
+                        <option value="7">7 years old</option>
+                        <option value="8">8 years old</option>
+                        <option value="9">9 years old</option>
+                        <option value="10">10 years old</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>What does your child love?</label>
+                    <p class="hint">Pick all that apply — these shape the story</p>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="dinosaurs"> 🦕 Dinosaurs</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="space"> 🚀 Space</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="animals"> 🐾 Animals</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="ocean"> 🌊 Ocean</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="trucks"> 🚛 Trucks</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="building"> 🔧 Building</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="princesses"> 👑 Royalty</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="superheroes"> ⚡ Superheroes</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="sports"> ⚽ Sports</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="music"> 🎵 Music</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="cooking"> 🍳 Cooking</label>
+                        <label class="checkbox-item"><input type="checkbox" name="interests" value="nature"> 🌿 Nature</label>
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <input type="text" name="interests_other" placeholder="Anything else they love? (optional)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Anything to avoid?</label>
+                    <p class="hint">Fears, themes, or topics we should leave out of the story (optional)</p>
+                    <input type="text" name="fears" placeholder="e.g. spiders, loud storms, being alone in the dark">
+                </div>
+
+                <div class="form-group">
+                    <label>Share a couple of photos of your child</label>
+                    <p class="hint">A class picture, playing outside, doing their favorite activity — anything where you can see their smile!</p>
+                    <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                        <div class="upload-icon">📷</div>
+                        <p><span class="upload-cta">Click to add photos</span> or drag and drop</p>
+                        <p style="font-size: 0.8rem; margin-top: 4px;">JPG, PNG, or HEIC · Max 10MB each</p>
+                    </div>
+                    <input type="file" id="photoInput" name="photos" multiple accept="image/*" style="display: none;">
+                    <div class="photo-tips">
+                        <span class="photo-tip"><span class="tip-icon">✓</span> Playing outside</span>
+                        <span class="photo-tip"><span class="tip-icon">✓</span> Class photo</span>
+                        <span class="photo-tip"><span class="tip-icon">✓</span> Doing what they love</span>
+                        <span class="photo-tip"><span class="tip-icon">✓</span> Big smiles welcome!</span>
+                    </div>
+                </div>
+
+                <!-- Hidden class code field — set via URL param or manually per classroom -->
+                <input type="hidden" name="class_code" id="classCode" value="">
+
+                <button type="submit" class="submit-btn">Create My Child's Storybook →</button>
+
+                <div class="form-footer">
+                    <p>By submitting, you consent to us using these photos to create your child's personalized storybook illustrations. Photos are kept private and deleted after the book is created.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>My Adventures · <a href="/" style="color: var(--navy);">myadventures.life</a> · Made with care for young readers</p>
+        </div>
+    </footer>
+
+    <script>
+        // Pull class_code from URL params (e.g., /signup?class=smith-lincoln)
+        const params = new URLSearchParams(window.location.search);
+        const classCode = params.get('class') || params.get('class_code') || '';
+        if (classCode) {
+            document.getElementById('classCode').value = classCode;
+        }
+
+        // Simple file upload preview
+        const photoInput = document.getElementById('photoInput');
+        const uploadArea = document.querySelector('.photo-upload-area');
+
+        photoInput.addEventListener('change', function() {
+            const count = this.files.length;
+            if (count > 0) {
+                uploadArea.innerHTML = `
+                    <div class="upload-icon">✅</div>
+                    <p><strong>${count} photo${count > 1 ? 's' : ''} added</strong></p>
+                    <p style="font-size: 0.8rem; margin-top: 4px; color: var(--text-muted);">Click to change</p>
+                `;
+            }
+        });
+
+        // Form submission placeholder
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Replace this with actual form handling (Tally, API, etc.)
+            alert('Thank you! We\'ll email your child\'s personalized storybook within one week.');
+        });
+    </script>
+
+</body>
+</html>
