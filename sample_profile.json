@@ -1,0 +1,15 @@
+{
+  "name": "Evan",
+  "age": 8,
+  "interests": ["dinosaurs", "adventure", "climbing", "exploring the outdoors"],
+  "favorite_things": {
+    "color": "green",
+    "pet": "",
+    "food": "",
+    "toy": "dinosaur figures"
+  },
+  "fears_to_avoid": ["being alone in the dark", "spiders"],
+  "reading_level": "developing",
+  "special_considerations": "",
+  "previous_adventures": []
+}
